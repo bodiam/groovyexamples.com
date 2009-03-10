@@ -1,0 +1,36 @@
+More about DSLs in Groovy
+
+DSLs in Groovy can be implemented in numerous ways, but one of them is by using a Builder, or in a Groovy context, groovy.util.BuilderSupport. You don't need the builder, you can write it yourself using the methodMissing and propertyMissing methods, but I consider the BuilderSupport a handy companion.
+
+Let me explain how the builder approach works. The best way to explain this is to compare this with a SAX parser. Ofcourse, if you don't know how a SAX parser works, it's quite useless, so let me first briefly explain how a SAX parser works. In short, a SAX parser works by reading in parts (not the whole tree!) of the XML document. Each time a part of an XML document is processed (be it a element, an attribute, a comment, xml data, or anything else), a callback is fired. This callback is a method which should be implemented, so you can work on the data. The Groovy BuilderSupport works the same.
+
+Every time a part of the DSL is processed, callback methods are fired. There are a couple of them, which I will illustrate with the following example. The callback methods which are written in comments:
+
+[code]
+def builder = new DemoBuilder()
+builder.build {                    
+     demo(name:'demo') {  
+      }
+     demo('demo') {
+     
+     }
+     demo(name:'demo', 'demo') {
+
+     }
+     demo()
+
+     }
+
+} 
+[/code]
+
+<table>
+  <tr><th>Line #</th><th>Method</th><th>Values</th></tr>
+  <tr><td>2</td><td>createNode(String name)</td><td>build</td></tr>
+  <tr><td>3</td><td>createNode(String name, Map attributes), setParent(parent, child)</td></tr>
+  <tr><td>5</td><td>nodeCompleted(parent, node)</td><td>parent=build, node=demo</td></tr>
+</table>
+
+So, as you can see, the callbacks are pretty straightforward while maintaining a lot of flexibility. The only thing you need to do is implement the abstract methods in the BuilderSupport, and you're set to go. This way, you can build your own DSL in no time and increase the readability of (for example) your configuration tremendously. In the next blog I'll demo a more practical approach for using DSLs.
+
+

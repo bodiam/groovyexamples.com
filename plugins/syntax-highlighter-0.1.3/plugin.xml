@@ -1,0 +1,11 @@
+<plugin name='syntax-highlighter' version='0.1.3'>
+  <author>Erik Pragt</author>
+  <authorEmail>epragt@zonnet.nl</authorEmail>
+  <title>Syntax Highlighter Plugin</title>
+  <description>This plugin provides a Javascript Syntax Highlighter for multiple languages and taglibs for easily accessing it.</description>
+  <documentation>http://www.grails.org/Syntax+Highlighter</documentation>
+  <resources>
+    <resource>UrlMappings</resource>
+    <resource>SyntaxHighlighterTagLib</resource>
+  </resources>
+</plugin>
